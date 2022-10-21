@@ -14,13 +14,17 @@ public class ColorChange : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "PinkPlayer")
+        this.gameObject.transform.tag = other.tag;
+
+        if (other.gameObject.tag == "WhitePlayer")
             render.sharedMaterial = material[0];
-        else if (other.gameObject.tag == "GreenPlayer")
+        else if (other.gameObject.tag == "PinkPlayer")
             render.sharedMaterial = material[1];
         else if (other.gameObject.tag == "RedPlayer")
             render.sharedMaterial = material[2];
         else if (other.gameObject.tag == "YellowPlayer")
             render.sharedMaterial = material[3];
+
+        Destroy(other.gameObject);
     }
 }

@@ -7,8 +7,10 @@ public class LoadGame : MonoBehaviour
 {
     public void PlayGame()
     {
-        Debug.Log("Ok");
+        Player.score = 0;
         Time.timeScale = 1f;
-        SceneManager.LoadScene(Random.Range(1, 10));
+        int rand_level = Random.Range(1, 10);
+        SceneManager.LoadScene(rand_level);
+        Debug.Log(rand_level);
     }
 }

@@ -6,6 +6,6 @@ public class ColorBarier : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        other.transform.tag = this.tag;
+        Player.player.transform.tag = this.tag;
     }
 }

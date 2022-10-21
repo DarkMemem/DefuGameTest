@@ -7,12 +7,14 @@ TagManager:
   - RedEnemy
   - YellowEnemy
   - GreenEnemy
-  - PinkEnemy
   - Barrier
   - GreenPlayer
   - RedPlayer
   - YellowPlayer
   - PinkPlayer
+  - WhitePlayer
+  - WhiteEnemy
+  - PinkEnemy
   layers:
   - Default
   - TransparentFX

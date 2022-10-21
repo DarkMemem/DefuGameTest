@@ -4,77 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
-{    
-    public int score;
-    public int heal;
-    public Text healDisplay;
-    public Text[] scoreDisplay;
-    public GameObject panelLose;
-    public GameObject panelWin;
-    public GameObject player;
-    public float maxScale = 1f;
+{
+    [SerializeField] public static int score;
+    [SerializeField] public static int heal;
+    [SerializeField] public GameObject panelWin;
+    [SerializeField] public static GameObject player;
+    [SerializeField] public static float maxScale = 1.5f;
 
-    private void Update()
+    public void Start()
     {
-        healDisplay.text = "Heal: " + heal.ToString();
-        scoreDisplay[0].text = "Score: " + score.ToString();
-        scoreDisplay[1].text = score.ToString();
-        scoreDisplay[2].text = score.ToString();
-        if (heal > 10)
-            heal = 10;
+        Player.player = this.gameObject;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("GreenEnemy"))
-            if (player.CompareTag("GreenPlayer") == other.CompareTag("GreenEnemy"))
-            {
-                heal++;
-                score++;
-                CheckHealUp();
-            }
-            else
-            {
-                Debug.Log("Score down Gren");
-                CheckHealDown();
-            }
-        else if (other.CompareTag("RedEnemy"))
-            if (player.CompareTag("RedPlayer") == other.CompareTag("RedEnemy"))
-            {
-                heal++;
-                score++;
-                CheckHealUp();
-            }
-            else
-            {
-                Debug.Log("Score down Red");
-                CheckHealDown();
-            }
-        else if (other.CompareTag("PinkEnemy"))
-            if (player.CompareTag("PinkPlayer") == other.CompareTag("PinkEnemy"))
-            {
-                heal++;
-                score++;
-                CheckHealUp();
-            }
-            else
-            {
-                Debug.Log("Score down Pink");
-                CheckHealDown();
-            }
-        else if (other.CompareTag("YellowEnemy"))
-            if (player.CompareTag("YellowPlayer") == other.CompareTag("YellowEnemy"))
-            {
-                heal++;
-                score++;
-                CheckHealUp();
-            }
-            else
-            {
-                Debug.Log("Score down Yellow");
-                CheckHealDown();
-            }
-        else if (other.CompareTag("Barrier"))
+        if (other.CompareTag("Barrier"))
         {
             if (player)
             {
@@ -85,32 +29,21 @@ public class Player : MonoBehaviour
         else if (other.gameObject.name == "FinishLine")
         {
             panelWin.SetActive(true);
+            heal = 0;
         }
     }
 
-
-    private void CheckHealUp()
+    public static void CheckHealUp()
     {
-        if (heal <= 10)
-        {
-            if (this.transform.localScale.x < maxScale)
-                this.transform.localScale = new Vector3(this.transform.localScale.x + 0.05f, this.transform.localScale.y + 0.05f, this.transform.localScale.z + 0.05f);
-        }
+        if (heal < 10)
+            heal++;
+        score++;
+        PlayerSize.SizeUp();
     }
-    private void CheckHealDown()
+
+    public static void CheckHealDown()
     {
         heal--;
-        if (heal >= 0)
-        {
-            player.transform.localScale = new Vector3(this.transform.localScale.x - 0.05f, this.transform.localScale.y - 0.05f, this.transform.localScale.z - 0.05f);
-        }
-        else if (heal < 0)
-        {
-            Time.timeScale = 0f;
-            heal = 0;
-            healDisplay.gameObject.SetActive(false);
-            scoreDisplay[0].gameObject.SetActive(false);
-            panelLose.SetActive(true);
-        }
+        PlayerSize.SizeDown();
     }
 }
